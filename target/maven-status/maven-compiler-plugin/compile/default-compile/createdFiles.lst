@@ -15,7 +15,6 @@ com/coding/exercise/bankapp/model/CustomerAccountXRef.class
 com/coding/exercise/bankapp/config/SecurityConfig.class
 com/coding/exercise/bankapp/domain/AccountInformation$AccountInformationBuilder.class
 com/coding/exercise/bankapp/repository/CustomerAccountXRefRepository.class
-com/coding/exercise/bankapp/config/SpringfoxConfig.class
 com/coding/exercise/bankapp/service/helper/BankingServiceHelper.class
 com/coding/exercise/bankapp/model/BankInfo.class
 com/coding/exercise/bankapp/config/ApplicationConfig.class
@@ -36,6 +35,5 @@ com/coding/exercise/bankapp/repository/AccountRepository.class
 com/coding/exercise/bankapp/repository/CustomerRepository.class
 com/coding/exercise/bankapp/domain/AccountInformation.class
 com/coding/exercise/bankapp/model/Account$AccountBuilder.class
-com/coding/exercise/bankapp/config/SpringfoxConfig$1.class
 com/coding/exercise/bankapp/domain/ContactDetails.class
 com/coding/exercise/bankapp/model/Transaction.class
