@@ -18,4 +18,4 @@ spring:
 # SpringDoc OpenAPI
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html
+    path: /swagger-ui/index.html
