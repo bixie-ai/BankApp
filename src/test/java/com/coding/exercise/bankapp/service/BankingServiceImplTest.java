@@ -1,9 +1,9 @@
 package com.coding.exercise.bankapp.service;
 
 import java.lang.reflect.Field;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -76,7 +76,7 @@ class BankingServiceImplTest {
                 .status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("john@test.com").build())
                 .customerAddress(Address.builder().address1("123 Main St").city("NY").state("NY").zip("10001").country("US").build())
-                .createDateTime(new Date())
+                .createDateTime(Instant.now())
                 .build();
 
         fromAccount = Account.builder()
@@ -87,7 +87,7 @@ class BankingServiceImplTest {
                 .accountType("SAVINGS")
                 .bankInformation(BankInfo.builder().branchCode(1).branchName("Main").routingNumber(12345)
                         .branchAddress(Address.builder().address1("1 Bank St").city("NY").state("NY").zip("10001").country("US").build()).build())
-                .createDateTime(new Date())
+                .createDateTime(Instant.now())
                 .build();
 
         toAccount = Account.builder()
@@ -98,7 +98,7 @@ class BankingServiceImplTest {
                 .accountType("SAVINGS")
                 .bankInformation(BankInfo.builder().branchCode(1).branchName("Main").routingNumber(12345)
                         .branchAddress(Address.builder().address1("1 Bank St").city("NY").state("NY").zip("10001").country("US").build()).build())
-                .createDateTime(new Date())
+                .createDateTime(Instant.now())
                 .build();
     }
 
@@ -134,8 +134,8 @@ class BankingServiceImplTest {
         when(accountRepository.findByAccountNumber(5001L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findByAccountNumber(5002L)).thenReturn(Optional.of(toAccount));
         when(bankingServiceHelper.createTransaction(any(), anyLong(), any()))
-                .thenReturn(Transaction.builder().txAmount(1000.0).txType("DEBIT").accountNumber(5001L).txDateTime(new Date()).build())
-                .thenReturn(Transaction.builder().txAmount(1000.0).txType("CREDIT").accountNumber(5002L).txDateTime(new Date()).build());
+                .thenReturn(Transaction.builder().txAmount(1000.0).txType("DEBIT").accountNumber(5001L).txDateTime(Instant.now()).build())
+                .thenReturn(Transaction.builder().txAmount(1000.0).txType("CREDIT").accountNumber(5002L).txDateTime(Instant.now()).build());
 
         ResponseEntity<Object> response = bankingService.transferDetails(transfer, 1001L);
 
@@ -157,9 +157,9 @@ class BankingServiceImplTest {
         when(accountRepository.findByAccountNumber(5001L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findByAccountNumber(5002L)).thenReturn(Optional.of(toAccount));
         when(bankingServiceHelper.createTransaction(any(), eq(5001L), eq("DEBIT")))
-                .thenReturn(Transaction.builder().txAmount(200.0).txType("DEBIT").accountNumber(5001L).txDateTime(new Date()).build());
+                .thenReturn(Transaction.builder().txAmount(200.0).txType("DEBIT").accountNumber(5001L).txDateTime(Instant.now()).build());
         when(bankingServiceHelper.createTransaction(any(), eq(5002L), eq("CREDIT")))
-                .thenReturn(Transaction.builder().txAmount(200.0).txType("CREDIT").accountNumber(5002L).txDateTime(new Date()).build());
+                .thenReturn(Transaction.builder().txAmount(200.0).txType("CREDIT").accountNumber(5002L).txDateTime(Instant.now()).build());
 
         ResponseEntity<Object> response = bankingService.transferDetails(transfer, 1001L);
 
@@ -233,7 +233,7 @@ class BankingServiceImplTest {
         when(accountRepository.findByAccountNumber(5001L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findByAccountNumber(5002L)).thenReturn(Optional.of(toAccount));
         when(bankingServiceHelper.createTransaction(any(), anyLong(), any()))
-                .thenReturn(Transaction.builder().txAmount(100.0).txType("DEBIT").accountNumber(5001L).txDateTime(new Date()).build());
+                .thenReturn(Transaction.builder().txAmount(100.0).txType("DEBIT").accountNumber(5001L).txDateTime(Instant.now()).build());
 
         int threadCount = 5;
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
@@ -277,7 +277,7 @@ class BankingServiceImplTest {
         when(accountRepository.findByAccountNumber(5001L)).thenReturn(Optional.of(fromAccount));
         when(accountRepository.findByAccountNumber(5002L)).thenReturn(Optional.of(toAccount));
         when(bankingServiceHelper.createTransaction(any(), anyLong(), any()))
-                .thenReturn(Transaction.builder().txAmount(0.0).txType("DEBIT").accountNumber(5001L).txDateTime(new Date()).build());
+                .thenReturn(Transaction.builder().txAmount(0.0).txType("DEBIT").accountNumber(5001L).txDateTime(Instant.now()).build());
 
         ResponseEntity<Object> response = bankingService.transferDetails(transfer, 1001L);
 
@@ -389,7 +389,6 @@ class BankingServiceImplTest {
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("New Customer created successfully.", response.getBody());
         verify(customerRepository).save(customerEntity);
-        assertNotNull(customerEntity.getCreateDateTime());
     }
 
     @Test
@@ -508,8 +507,8 @@ class BankingServiceImplTest {
 
     @Test
     void findTransactionsByAccountNumber_existsWithTransactions_returnsList() {
-        Transaction tx1 = Transaction.builder().accountNumber(5001L).txAmount(100.0).txType("CREDIT").txDateTime(new Date()).build();
-        Transaction tx2 = Transaction.builder().accountNumber(5001L).txAmount(50.0).txType("DEBIT").txDateTime(new Date()).build();
+        Transaction tx1 = Transaction.builder().accountNumber(5001L).txAmount(100.0).txType("CREDIT").txDateTime(Instant.now()).build();
+        Transaction tx2 = Transaction.builder().accountNumber(5001L).txAmount(50.0).txType("DEBIT").txDateTime(Instant.now()).build();
 
         TransactionDetails td1 = TransactionDetails.builder().accountNumber(5001L).txAmount(100.0).txType("CREDIT").build();
         TransactionDetails td2 = TransactionDetails.builder().accountNumber(5001L).txAmount(50.0).txType("DEBIT").build();

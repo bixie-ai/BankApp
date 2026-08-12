@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
+import java.time.Instant;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -90,7 +90,7 @@ class CustomerControllerIntegrationTest {
                         .zip("97201")
                         .country("US")
                         .build())
-                .createDateTime(new Date())
+                .createDateTime(Instant.now())
                 .build();
         customerRepository.save(entity);
 
@@ -110,12 +110,12 @@ class CustomerControllerIntegrationTest {
                 .firstName("Alice").lastName("One").customerNumber(3010L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("alice@test.com").homePhone("1").workPhone("2").build())
                 .customerAddress(Address.builder().address1("A1").city("C1").state("S1").zip("00001").country("US").build())
-                .createDateTime(new Date()).build();
+                .createDateTime(Instant.now()).build();
         Customer c2 = Customer.builder()
                 .firstName("Bob").lastName("Two").customerNumber(3011L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("bob@test.com").homePhone("3").workPhone("4").build())
                 .customerAddress(Address.builder().address1("A2").city("C2").state("S2").zip("00002").country("US").build())
-                .createDateTime(new Date()).build();
+                .createDateTime(Instant.now()).build();
         customerRepository.save(c1);
         customerRepository.save(c2);
 
@@ -139,7 +139,7 @@ class CustomerControllerIntegrationTest {
                 .firstName("Charlie").lastName("Brown").customerNumber(3003L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("charlie@test.com").homePhone("555").workPhone("666").build())
                 .customerAddress(Address.builder().address1("789 Pine").city("Seattle").state("WA").zip("98101").country("US").build())
-                .createDateTime(new Date()).build();
+                .createDateTime(Instant.now()).build();
         customerRepository.save(entity);
 
         CustomerDetails updatePayload = CustomerDetails.builder()
@@ -196,7 +196,7 @@ class CustomerControllerIntegrationTest {
                 .firstName("DeleteMe").lastName("User").customerNumber(3004L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("del@test.com").homePhone("1").workPhone("2").build())
                 .customerAddress(Address.builder().address1("Del St").city("Del").state("DL").zip("00000").country("US").build())
-                .createDateTime(new Date()).build();
+                .createDateTime(Instant.now()).build();
         customerRepository.save(entity);
 
         mockMvc.perform(delete("/customers/{customerNumber}", 3004L))
