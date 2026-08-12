@@ -1,90 +1,131 @@
-# Banking Application using Java8, Spring Boot, Spring Security and H2 DB
+# BankApp
 
-RESTful API to simulate simple banking operations. 
+RESTful API simulating core banking operations — customer management, account lifecycle, deposits, withdrawals, and internal fund transfers.
 
-## Requirements
+Built with Spring Boot 3.4, Spring Security, Spring Data JPA, and an H2 in-memory database.
 
-*	CRUD operations for customers and accounts.
-*	Support deposits and withdrawals on accounts.
-*	Internal transfer support (i.e. a customer may transfer funds from one account to another).
+## Tech Stack
 
+| Layer | Technology |
+|-------|-----------|
+| Language | Java 25 |
+| Framework | Spring Boot 3.4.13 |
+| Security | Spring Security (HTTP Basic) |
+| Persistence | Spring Data JPA + H2 (in-memory) |
+| Documentation | SpringDoc OpenAPI (Swagger UI) |
+| Build | Maven |
+| Other | Lombok, Virtual Threads, Spring Boot Actuator |
+
+## Prerequisites
+
+- **Java 25** (JDK)
+- **Maven 3.9+**
 
 ## Getting Started
 
-1. Checkout the project from GitHub
+### Build
 
-```
-git clone https://github.com/sbathina/BankApp
-
-```
-2. Enable Lombok support on your IDE
-
-Refer to the following link for instructions:
-
-```
-https://projectlombok.org/setup/eclipse
-
-```
-3. Open IDE of your choice and Import as existing maven project in your workspace
-
-```
-- Import existing maven project
-- Run mvn clean install
-- If using STS, Run As Spring Boot App
-
-```
-4. Default port for the api is 8989
-
-
-### Prerequisites
-
-* Java 8
-* Spring Tool Suite 4 or similar IDE
-* [Maven](https://maven.apache.org/) - Dependency Management
-
-### Maven Dependencies
-
-```
-spring-boot-starter-actuator
-spring-boot-starter-data-jpa
-spring-boot-starter-security
-spring-boot-starter-web
-spring-boot-devtools
-h2 - Inmemory database
-lombok - to reduce boilerplate code
-springdoc-openapi-starter-webmvc-ui
-spring-boot-starter-test
-spring-security-test
-
+```bash
+mvn clean install
 ```
 
-## Swagger
+### Run
 
-Please find the Rest API documentation in the below url
-
-```
-http://localhost:8989/bank-api/swagger-ui/index.html
-
+```bash
+mvn spring-boot:run
 ```
 
-## H2 In-Memory Database
+The application starts on **port 8989** with context path `/bank-api`.
 
-Make sure to use jdbc:h2:mem:testdb as your jdbc url. If you intend to you use custom database name, please
-define datasource properties in application.yml
+Base URL: `http://localhost:8989/bank-api`
+
+### Default Credentials
+
+The API is secured with HTTP Basic authentication.
+
+| Username | Password |
+|----------|----------|
+| `bankapp` | `changeit` |
+
+## H2 Console
+
+Access the in-memory database console (no authentication required):
 
 ```
 http://localhost:8989/bank-api/h2-console/
-
 ```
 
-## Testing the Bank APP Rest Api
+| Setting | Value |
+|---------|-------|
+| JDBC URL | `jdbc:h2:mem:testdb` |
+| Username | `sa` |
+| Password | *(empty)* |
 
-1. Please use the Swagger url to perform CRUD operations. 
+## Swagger UI
 
-2. Browse to <project-root>/src/test/resources to find sample requests to add customer and accounts.
+Interactive API documentation (no authentication required):
 
+```
+http://localhost:8989/bank-api/swagger-ui/index.html
+```
 
-## Authors
+OpenAPI JSON spec:
 
-* **Shyam Bathina**
+```
+http://localhost:8989/bank-api/v3/api-docs
+```
 
+## API Reference
+
+All endpoints are relative to the base URL `http://localhost:8989/bank-api`.
+
+### Public Endpoints
+
+These endpoints are accessible without authentication:
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/swagger-ui/**` | Swagger UI |
+| GET | `/v3/api-docs/**` | OpenAPI specification |
+| GET | `/h2-console/**` | H2 database console |
+
+### Protected Endpoints — Customers
+
+All customer endpoints require HTTP Basic authentication.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/customers/all` | List all customers |
+| GET | `/customers/{customerNumber}` | Get customer by number |
+| POST | `/customers/add` | Create a customer and initial account |
+| PUT | `/customers/{customerNumber}` | Update customer details |
+| DELETE | `/customers/{customerNumber}` | Delete customer and associated accounts |
+
+### Protected Endpoints — Accounts & Transactions
+
+All account endpoints require HTTP Basic authentication.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/accounts/{accountNumber}` | Get account details |
+| POST | `/accounts/add/{customerNumber}` | Create a new account for an existing customer |
+| PUT | `/accounts/transfer/{customerNumber}` | Transfer funds between customer accounts |
+| GET | `/accounts/transactions/{accountNumber}` | List all transactions for an account |
+
+## Running Tests
+
+```bash
+mvn test
+```
+
+## Project Structure
+
+```
+src/main/java/com/coding/exercise/bankapp/
+├── config/             # Security and OpenAPI configuration
+├── controller/         # REST controllers (Customer, Account)
+├── domain/             # DTOs / request-response objects
+├── model/              # JPA entities
+├── repository/         # Spring Data JPA repositories
+└── service/            # Business logic layer
+```
