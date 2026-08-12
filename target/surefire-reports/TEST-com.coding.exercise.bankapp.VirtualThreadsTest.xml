@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.coding.exercise.bankapp.BankingApplicationTests" time="0.814" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.coding.exercise.bankapp.VirtualThreadsTest" time="6.644" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="25"/>
     <property name="sun.jnu.encoding" value="ANSI_X3.4-1968"/>
@@ -46,7 +46,7 @@
     <property name="localRepository" value="/home/node/.m2/repository"/>
     <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
     <property name="java.io.tmpdir" value="/tmp"/>
-    <property name="com.zaxxer.hikari.pool_number" value="2"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
     <property name="java.version" value="25.0.4"/>
     <property name="user.dir" value="/tmp/claude-mcp-UQNxJn"/>
     <property name="os.arch" value="aarch64"/>
@@ -63,10 +63,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="contextLoads" classname="com.coding.exercise.bankapp.BankingApplicationTests" time="0.007">
-    <system-out><![CDATA[2026-08-12T10:46:58.611Z  INFO 20663 --- [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.coding.exercise.bankapp.BankingApplicationTests]: BankingApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-08-12T10:46:58.613Z  INFO 20663 --- [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.coding.exercise.bankapp.BankingApplication for test class com.coding.exercise.bankapp.BankingApplicationTests
-2026-08-12T10:46:58.620Z  INFO 20663 --- [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+  <testcase name="virtualThreadsConfigurationIsEnabled" classname="com.coding.exercise.bankapp.VirtualThreadsTest" time="0.469">
+    <system-out><![CDATA[10:46:52.115 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.coding.exercise.bankapp.VirtualThreadsTest]: VirtualThreadsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:46:52.242 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.coding.exercise.bankapp.BankingApplication for test class com.coding.exercise.bankapp.VirtualThreadsTest
+10:46:52.388 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -77,32 +77,45 @@
 
  :: Spring Boot ::               (v3.4.13)
 
-2026-08-12T10:46:58.653Z  INFO 20663 --- [           main] c.c.e.bankapp.BankingApplicationTests    : Starting BankingApplicationTests using Java 25.0.4 with PID 20663 (started by node in /tmp/claude-mcp-UQNxJn)
-2026-08-12T10:46:58.654Z  INFO 20663 --- [           main] c.c.e.bankapp.BankingApplicationTests    : No active profile set, falling back to 1 default profile: "default"
-2026-08-12T10:46:58.967Z  INFO 20663 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-08-12T10:46:58.977Z  INFO 20663 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 4 JPA repository interfaces.
-2026-08-12T10:46:59.037Z  INFO 20663 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2026-08-12T10:46:59.039Z  INFO 20663 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:94804e7b-679c-4f7f-b427-ee9bd9653b29 user=SA
-2026-08-12T10:46:59.039Z  INFO 20663 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2026-08-12T10:46:59.040Z  INFO 20663 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-08-12T10:46:59.042Z  INFO 20663 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2026-08-12T10:46:59.070Z  INFO 20663 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2026-08-12T10:46:59.071Z  INFO 20663 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+2026-08-12T10:46:52.771Z  INFO 20663 --- [           main] c.c.exercise.bankapp.VirtualThreadsTest  : Starting VirtualThreadsTest using Java 25.0.4 with PID 20663 (started by node in /tmp/claude-mcp-UQNxJn)
+2026-08-12T10:46:52.772Z  INFO 20663 --- [           main] c.c.exercise.bankapp.VirtualThreadsTest  : No active profile set, falling back to 1 default profile: "default"
+2026-08-12T10:46:54.173Z  INFO 20663 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-08-12T10:46:54.235Z  INFO 20663 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
+2026-08-12T10:46:54.725Z  INFO 20663 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-08-12T10:46:54.948Z  INFO 20663 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:b2f50dbe-0553-4c82-9171-fb571770883b user=SA
+2026-08-12T10:46:54.949Z  INFO 20663 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-08-12T10:46:54.996Z  INFO 20663 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-08-12T10:46:55.040Z  INFO 20663 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.39.Final
+2026-08-12T10:46:55.074Z  INFO 20663 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-08-12T10:46:55.323Z  INFO 20663 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-08-12T10:46:55.383Z  INFO 20663 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
 	Autocommit mode: undefined/unknown
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2026-08-12T10:46:59.109Z  INFO 20663 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2026-08-12T10:46:59.120Z  INFO 20663 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-08-12T10:46:59.194Z  WARN 20663 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-08-12T10:46:59.206Z  INFO 20663 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2026-08-12T10:46:59.300Z  INFO 20663 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
-2026-08-12T10:46:59.332Z  INFO 20663 --- [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
-2026-08-12T10:46:59.394Z  INFO 20663 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:94804e7b-679c-4f7f-b427-ee9bd9653b29'
-2026-08-12T10:46:59.410Z  INFO 20663 --- [           main] c.c.e.bankapp.BankingApplicationTests    : Started BankingApplicationTests in 0.791 seconds (process running for 8.063)
+2026-08-12T10:46:56.188Z  INFO 20663 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-08-12T10:46:56.253Z  INFO 20663 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-08-12T10:46:56.828Z  WARN 20663 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-08-12T10:46:56.878Z  INFO 20663 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-08-12T10:46:57.292Z  INFO 20663 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-08-12T10:46:57.444Z  INFO 20663 --- [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-08-12T10:46:57.700Z  INFO 20663 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:b2f50dbe-0553-4c82-9171-fb571770883b'
+2026-08-12T10:46:57.743Z  INFO 20663 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-08-12T10:46:57.743Z  INFO 20663 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-08-12T10:46:57.744Z  INFO 20663 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-08-12T10:46:57.841Z  INFO 20663 --- [           main] c.c.exercise.bankapp.VirtualThreadsTest  : Started VirtualThreadsTest in 5.462 seconds (process running for 6.493)
 ]]></system-out>
+    <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/home/node/.m2/repository/net/bytebuddy/byte-buddy-agent/1.15.11/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
   </testcase>
+  <testcase name="jvmSupportsVirtualThreads" classname="com.coding.exercise.bankapp.VirtualThreadsTest" time="0.009"/>
+  <testcase name="concurrentVirtualThreadExecution" classname="com.coding.exercise.bankapp.VirtualThreadsTest" time="0.011"/>
+  <testcase name="applicationEndpointAccessible" classname="com.coding.exercise.bankapp.VirtualThreadsTest" time="0.143"/>
 </testsuite>
