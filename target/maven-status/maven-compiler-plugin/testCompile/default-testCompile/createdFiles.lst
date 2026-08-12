@@ -1,0 +1,8 @@
+com/coding/exercise/bankapp/VirtualThreadsTest.class
+com/coding/exercise/bankapp/repository/TransactionRepositoryIntegrationTest.class
+com/coding/exercise/bankapp/service/BankingServiceImplTest.class
+com/coding/exercise/bankapp/repository/CustomerAccountXRefRepositoryIntegrationTest.class
+com/coding/exercise/bankapp/repository/CustomerRepositoryIntegrationTest.class
+com/coding/exercise/bankapp/controller/CustomerControllerIntegrationTest.class
+com/coding/exercise/bankapp/BankingApplicationTests.class
+com/coding/exercise/bankapp/repository/AccountRepositoryIntegrationTest.class

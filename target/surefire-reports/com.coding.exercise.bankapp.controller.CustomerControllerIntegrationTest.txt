@@ -1,0 +1,114 @@
+-------------------------------------------------------------------------------
+Test set: com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 10, Errors: 0, Skipped: 0, Time elapsed: 0.365 s <<< FAILURE! -- in com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getCustomer_afterCreation_returnsCustomerDetails -- Time elapsed: 0.113 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getCustomer_afterCreation_returnsCustomerDetails(CustomerControllerIntegrationTest.java:98)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.addCustomer_withValidPayload_returnsCreated -- Time elapsed: 0.062 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.addCustomer_withValidPayload_returnsCreated(CustomerControllerIntegrationTest.java:69)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.deleteCustomer_nonExistent_returnsBadRequest -- Time elapsed: 0.019 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<400> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.deleteCustomer_nonExistent_returnsBadRequest(CustomerControllerIntegrationTest.java:214)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getCustomer_nonExistent_returnsNullBody -- Time elapsed: 0.021 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getCustomer_nonExistent_returnsNullBody(CustomerControllerIntegrationTest.java:259)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.deleteCustomer_existingCustomer_returnsOk -- Time elapsed: 0.013 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.deleteCustomer_existingCustomer_returnsOk(CustomerControllerIntegrationTest.java:203)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getAllCustomers_multipleCustomers_returnsList -- Time elapsed: 0.023 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getAllCustomers_multipleCustomers_returnsList(CustomerControllerIntegrationTest.java:123)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.updateCustomer_existingCustomer_returnsOk -- Time elapsed: 0.038 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.updateCustomer_existingCustomer_returnsOk(CustomerControllerIntegrationTest.java:168)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.updateCustomer_nonExistent_returnsNotFound -- Time elapsed: 0.014 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.updateCustomer_nonExistent_returnsNotFound(CustomerControllerIntegrationTest.java:189)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getAllCustomers_emptyDatabase_returnsEmptyList -- Time elapsed: 0.010 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.getAllCustomers_emptyDatabase_returnsEmptyList(CustomerControllerIntegrationTest.java:132)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.addCustomer_jakartaCompliantJsonPayload_parsesCorrectly -- Time elapsed: 0.008 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<201> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.coding.exercise.bankapp.controller.CustomerControllerIntegrationTest.addCustomer_jakartaCompliantJsonPayload_parsesCorrectly(CustomerControllerIntegrationTest.java:246)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
