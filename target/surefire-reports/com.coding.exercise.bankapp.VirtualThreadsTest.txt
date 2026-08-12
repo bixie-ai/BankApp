@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.coding.exercise.bankapp.VirtualThreadsTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.644 s -- in com.coding.exercise.bankapp.VirtualThreadsTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.662 s -- in com.coding.exercise.bankapp.VirtualThreadsTest
