@@ -1,12 +1,22 @@
 import { forwardRef, type TextareaHTMLAttributes, useId } from 'react'
 import { cn } from '@lib/cn'
 
+/** Props for the {@link Textarea} component. */
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Visible label rendered above the textarea. */
   label?: string
+  /** Error message displayed below the textarea; also triggers error styling. */
   error?: string
+  /** Supplementary hint text shown below the textarea when no error is present. */
   helperText?: string
 }
 
+/**
+ * A multi-line text input with integrated label, validation error display,
+ * and helper text. Supports vertical resizing and read-only mode.
+ *
+ * @returns A labeled textarea field with optional error and helper text.
+ */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ label, error, helperText, disabled, readOnly, className, id, ...props }, ref) => {
     const generatedId = useId()

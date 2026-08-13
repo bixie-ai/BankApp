@@ -28,6 +28,13 @@ import com.coding.exercise.bankapp.repository.CustomerRepository;
 import com.coding.exercise.bankapp.repository.TransactionRepository;
 import com.coding.exercise.bankapp.service.helper.BankingServiceHelper;
 
+/**
+ * Core implementation of all banking business operations.
+ *
+ * <p>Orchestrates customer CRUD, account management, fund transfers, and transaction
+ * queries by coordinating between repositories and the mapping helper. All public
+ * methods execute within a Spring-managed transaction.</p>
+ */
 @Service
 @Transactional
 public class BankingServiceImpl implements BankingService {
@@ -43,11 +50,17 @@ public class BankingServiceImpl implements BankingService {
     @Autowired
     private BankingServiceHelper bankingServiceHelper;
 
+    /**
+     * Constructs the service with the required customer repository.
+     *
+     * @param repository the customer data access layer
+     */
     public BankingServiceImpl(CustomerRepository repository) {
         this.customerRepository=repository;
     }
 
 
+    /** {@inheritDoc} */
     public List<CustomerDetails> findAll() {
 
     	List<CustomerDetails> allCustomerDetails = new ArrayList<>();
@@ -61,6 +74,7 @@ public class BankingServiceImpl implements BankingService {
         return allCustomerDetails;
     }
 
+    /** {@inheritDoc} */
     public Page<CustomerDetails> findAllPaginated(String search, Pageable pageable) {
         if (search != null && !search.isBlank()) {
             return customerRepository.searchCustomers(search.trim(), pageable)
@@ -70,6 +84,7 @@ public class BankingServiceImpl implements BankingService {
                 .map(bankingServiceHelper::convertToCustomerDomain);
     }
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> addCustomer(CustomerDetails customerDetails) {
 
 		Customer customer = bankingServiceHelper.convertToCustomerEntity(customerDetails);
@@ -79,6 +94,7 @@ public class BankingServiceImpl implements BankingService {
 	}
 
 
+    /** {@inheritDoc} */
 	public CustomerDetails findByCustomerNumber(Long customerNumber) {
 
 		Optional<Customer> customerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
@@ -89,6 +105,7 @@ public class BankingServiceImpl implements BankingService {
 		return null;
 	}
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> updateCustomer(CustomerDetails customerDetails, Long customerNumber) {
 		Optional<Customer> managedCustomerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
 		Customer unmanagedCustomerEntity = bankingServiceHelper.convertToCustomerEntity(customerDetails);
@@ -133,6 +150,7 @@ public class BankingServiceImpl implements BankingService {
 		}
 	}
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> deleteCustomer(Long customerNumber) {
 
 		Optional<Customer> managedCustomerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
@@ -146,6 +164,7 @@ public class BankingServiceImpl implements BankingService {
 		}
 	}
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> findByAccountNumber(Long accountNumber) {
 
 		Optional<Account> accountEntityOpt = accountRepository.findByAccountNumber(accountNumber);
@@ -158,6 +177,7 @@ public class BankingServiceImpl implements BankingService {
 
 	}
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> addNewAccount(AccountInformation accountInformation, Long customerNumber) {
 
 		Optional<Customer> customerEntityOpt = customerRepository.findByCustomerNumber(customerNumber);
@@ -175,6 +195,7 @@ public class BankingServiceImpl implements BankingService {
 		return ResponseEntity.status(HttpStatus.CREATED).body("New Account created successfully.");
 	}
 
+    /** {@inheritDoc} */
 	public ResponseEntity<Object> transferDetails(TransferDetails transferDetails, Long customerNumber) {
 
 		List<Account> accountEntities = new ArrayList<>();
@@ -230,6 +251,7 @@ public class BankingServiceImpl implements BankingService {
 
 	}
 
+    /** {@inheritDoc} */
 	public List<TransactionDetails> findTransactionsByAccountNumber(Long accountNumber) {
 		List<TransactionDetails> transactionDetails = new ArrayList<>();
 		Optional<Account> accountEntityOpt = accountRepository.findByAccountNumber(accountNumber);

@@ -5,8 +5,18 @@ import { AccountDetail } from '@/components/accounts/AccountDetail'
 import { TransactionHistory } from '@/components/accounts/TransactionHistory'
 import { CreateAccountForm } from '@/components/accounts/CreateAccountForm'
 
+/** Discriminated view state controlling whether the details or creation form is displayed. */
 type ActiveView = 'details' | 'create'
 
+/**
+ * Account management page that toggles between viewing an existing account's
+ * details (with transaction history) and creating a new account.
+ *
+ * When an `accountId` route param is present the page defaults to showing
+ * account details; otherwise it shows the creation form.
+ *
+ * @returns The account management layout with navigation buttons and the active view.
+ */
 export function AccountPage() {
   const { accountId } = useParams<{ accountId: string }>()
   const [activeView, setActiveView] = useState<ActiveView>(accountId ? 'details' : 'create')

@@ -1,13 +1,20 @@
 import { useEffect, useState, type HTMLAttributes } from 'react'
 import { cn } from '@lib/cn'
 
+/** Visual style variants indicating the severity or nature of a toast notification. */
 export type ToastVariant = 'success' | 'error' | 'info' | 'warning'
 
+/** Props for the {@link Toast} component. */
 export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
+  /** The visual style conveying the toast's intent (success, error, etc.). */
   variant?: ToastVariant
+  /** The notification text displayed to the user. */
   message: string
+  /** Controls visibility; when toggled to true the toast appears and starts its auto-dismiss timer. */
   open?: boolean
+  /** Callback invoked when the toast is dismissed, either manually or after the duration elapses. */
   onClose?: () => void
+  /** Time in milliseconds before the toast auto-dismisses. Set to 0 to disable auto-dismiss. */
   duration?: number
 }
 
@@ -25,6 +32,13 @@ const iconMap: Record<ToastVariant, string> = {
   warning: '⚠',
 }
 
+/**
+ * A transient notification banner that communicates brief feedback to the user.
+ * Supports multiple severity variants, auto-dismiss after a configurable duration,
+ * and an optional manual dismiss button.
+ *
+ * @returns A dismissible alert banner, or null when not visible.
+ */
 export function Toast({ variant = 'info', message, open = true, onClose, duration = 5000, className, ...props }: ToastProps) {
   const [visible, setVisible] = useState(open)
 

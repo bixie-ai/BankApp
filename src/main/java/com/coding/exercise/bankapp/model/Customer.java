@@ -19,6 +19,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JPA entity representing a bank customer in the persistence layer.
+ *
+ * <p>Stores personal identification fields, status, and has cascading one-to-one and
+ * many-to-one relationships with {@link Contact} and {@link Address} respectively.
+ * The entity uses both an internal UUID primary key and an externally visible
+ * customer number for business-level identification.</p>
+ *
+ * <p>Lifecycle hooks:
+ * <ul>
+ *   <li>{@code @PrePersist} sets {@code createDateTime} to the current instant on initial save.</li>
+ *   <li>{@code @PreUpdate} sets {@code updateDateTime} to the current instant on every update.</li>
+ * </ul></p>
+ */
 @Entity
 @Data
 @Builder

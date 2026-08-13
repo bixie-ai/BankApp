@@ -11,10 +11,19 @@ import {
   Modal,
 } from '@components/ui'
 
+/** Props for the {@link CustomerDetail} component. */
 interface CustomerDetailProps {
+  /** The numeric identifier for the customer whose details should be loaded. */
   customerNumber: number
 }
 
+/**
+ * Renders a full customer profile page showing personal information, contact details, linked accounts,
+ * and provides edit/delete actions. Deletion requires confirmation through a modal dialog and
+ * navigates back to the customer list on success.
+ *
+ * @returns A detail view with customer information cards and action buttons.
+ */
 export function CustomerDetail({ customerNumber }: CustomerDetailProps) {
   const navigate = useNavigate()
   const { data: customer, isLoading } = useCustomer(customerNumber)

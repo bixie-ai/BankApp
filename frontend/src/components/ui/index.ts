@@ -1,3 +1,12 @@
+/**
+ * UI component library barrel file.
+ *
+ * Re-exports all shared UI primitives so consumers can import from a single
+ * path (e.g. `import { Button, Input } from '@components/ui'`).
+ *
+ * @module ui
+ */
+
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button'
 export { Input, type InputProps } from './Input'
 export { Badge, type BadgeProps, type BadgeVariant } from './Badge'

@@ -18,6 +18,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JPA entity representing a bank account in the persistence layer.
+ *
+ * <p>Stores account identification (both internal UUID and business account number),
+ * status, type, balance, and associated bank branch information. Audit timestamps
+ * are managed automatically via JPA lifecycle callbacks.</p>
+ *
+ * <p>Lifecycle hooks:
+ * <ul>
+ *   <li>{@code @PrePersist} sets {@code createDateTime} to the current instant on initial save.</li>
+ *   <li>{@code @PreUpdate} sets {@code updateDateTime} to the current instant on every update.</li>
+ * </ul></p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

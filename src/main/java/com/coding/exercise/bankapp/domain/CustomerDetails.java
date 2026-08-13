@@ -6,6 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data transfer object representing customer information exchanged between the
+ * controller and service layers.
+ *
+ * <p>Encapsulates personal identification fields, status, and nested address and
+ * contact details. This DTO shields API consumers from persistence concerns such
+ * as entity IDs and audit timestamps present on the underlying JPA entity.</p>
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

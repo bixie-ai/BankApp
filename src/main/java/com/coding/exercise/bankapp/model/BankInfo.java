@@ -15,6 +15,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JPA entity representing bank branch information in the persistence layer.
+ *
+ * <p>Stores branch identification (name, code, routing number) and maintains a
+ * cascading one-to-one relationship with the branch {@link Address}. This entity
+ * is owned by the {@link Account} entity and is persisted/removed with it via
+ * cascade operations.</p>
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

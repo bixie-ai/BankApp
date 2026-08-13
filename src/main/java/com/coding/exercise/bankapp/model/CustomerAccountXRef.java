@@ -13,6 +13,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JPA entity representing the cross-reference (join table) between customers and accounts.
+ *
+ * <p>Enables a many-to-many relationship between {@link Customer} and {@link Account}
+ * by storing pairs of customer numbers and account numbers. This design allows a
+ * single customer to own multiple accounts and, potentially, multiple customers to
+ * share access to the same account.</p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

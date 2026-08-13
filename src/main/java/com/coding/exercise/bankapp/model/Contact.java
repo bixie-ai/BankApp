@@ -13,6 +13,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * JPA entity representing customer contact information in the persistence layer.
+ *
+ * <p>Stores communication channels (email, home phone, work phone) and is owned by
+ * the {@link Customer} entity via a cascading one-to-one relationship. The entity
+ * is persisted and removed along with its owning customer.</p>
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

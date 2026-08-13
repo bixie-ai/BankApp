@@ -16,12 +16,21 @@ import {
 import { formatCurrency } from '@utils/format-currency'
 import { formatDate } from '@utils/format-date'
 
+/** Props for the {@link TransactionHistory} component. */
 interface TransactionHistoryProps {
+  /** The account identifier whose transactions should be fetched and displayed. */
   accountId: string
 }
 
 const PAGE_SIZE = 10
 
+/**
+ * Displays a paginated table of transactions for a given account, including date, description,
+ * signed amount, and a computed running balance. Supports page navigation and handles
+ * loading, error, and empty states gracefully.
+ *
+ * @returns A card containing a transaction table with pagination controls.
+ */
 export function TransactionHistory({ accountId }: TransactionHistoryProps) {
   const [page, setPage] = useState(0)
   const { data, isLoading, isError, error, refetch } = useTransactions({
