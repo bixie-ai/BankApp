@@ -83,7 +83,9 @@ describe('useCreateAccount', () => {
       }
     })
 
-    expect(result.current.isError).toBe(true)
+    await waitFor(() => {
+      expect(result.current.isError).toBe(true)
+    })
     expect(result.current.error).toBeInstanceOf(Error)
     expect((result.current.error as Error).message).toBe('Creation failed')
   })

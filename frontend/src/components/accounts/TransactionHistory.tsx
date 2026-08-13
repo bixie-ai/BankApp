@@ -80,7 +80,7 @@ export function TransactionHistory({ accountId }: TransactionHistoryProps) {
   })
 
   return (
-    <Card padding="none">
+    <Card padding="none" data-testid="transaction-history">
       <div className="p-6 pb-0">
         <CardHeader
           title="Transaction History"
@@ -98,9 +98,9 @@ export function TransactionHistory({ accountId }: TransactionHistoryProps) {
         </TableHeader>
         <TableBody>
           {rows.map((tx) => (
-            <TableRow key={tx.id}>
+            <TableRow key={tx.id} data-testid={`transaction-row-${tx.id}`}>
               <TableCell>{formatDate(tx.createdAt)}</TableCell>
-              <TableCell>{tx.description}</TableCell>
+              <TableCell data-testid="transaction-description">{tx.description}</TableCell>
               <TableCell>
                 <span className={tx.type === 'WITHDRAWAL' ? 'text-error' : 'text-green-700'}>
                   {tx.type === 'WITHDRAWAL' ? '-' : '+'}

@@ -48,7 +48,7 @@ export function CustomerList() {
   const totalPages = data?.totalPages ?? 0
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" data-testid="customer-list">
       <div className="flex items-center justify-between">
         <Input
           placeholder="Search customers..."
@@ -56,8 +56,9 @@ export function CustomerList() {
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm"
           aria-label="Search customers"
+          data-testid="customer-search-input"
         />
-        <Button variant="primary" onClick={() => navigate('/customers/new')}>
+        <Button variant="primary" onClick={() => navigate('/customers/new')} data-testid="add-customer-button">
           Add Customer
         </Button>
       </div>
@@ -83,12 +84,13 @@ export function CustomerList() {
                 key={customer.customerNumber}
                 className="cursor-pointer"
                 onClick={() => navigate(`/customers/${customer.customerNumber}`)}
+                data-testid={`customer-row-${customer.customerNumber}`}
               >
-                <TableCell>
+                <TableCell data-testid="customer-name">
                   {customer.firstName} {customer.lastName}
                 </TableCell>
-                <TableCell>{customer.contactDetails?.emailId ?? '—'}</TableCell>
-                <TableCell>{customer.contactDetails?.homePhone ?? '—'}</TableCell>
+                <TableCell data-testid="customer-email">{customer.contactDetails?.emailId ?? '—'}</TableCell>
+                <TableCell data-testid="customer-phone">{customer.contactDetails?.homePhone ?? '—'}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -96,12 +98,13 @@ export function CustomerList() {
       )}
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2" data-testid="customer-pagination">
           <Button
             variant="secondary"
             size="sm"
             disabled={page === 0}
             onClick={() => setPage((p) => p - 1)}
+            data-testid="pagination-prev"
           >
             Previous
           </Button>
@@ -113,6 +116,7 @@ export function CustomerList() {
             size="sm"
             disabled={page >= totalPages - 1}
             onClick={() => setPage((p) => p + 1)}
+            data-testid="pagination-next"
           >
             Next
           </Button>
