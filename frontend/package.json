@@ -9,6 +9,9 @@
     "lint": "eslint src/",
     "format": "prettier --write src/",
     "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:e2e": "playwright test",
     "test:watch": "vitest",
     "preview": "vite preview"
   },
@@ -29,8 +32,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.4",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
@@ -45,6 +50,7 @@
     "globals": "^17.11.0",
     "jest-axe": "^11.0.0",
     "jsdom": "^30.0.1",
+    "msw": "^2.15.0",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",
     "typescript": "~6.0.2",

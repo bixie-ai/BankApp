@@ -108,7 +108,7 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
   const isSubmitting = createMutation.isPending || updateMutation.isPending
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg" data-testid="customer-form">
       <Typography variant="h2">
         {mode === 'create' ? 'Create Customer' : 'Edit Customer'}
       </Typography>
@@ -119,6 +119,7 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
         onChange={(e) => handleChange('firstName', e.target.value)}
         error={errors.firstName}
         required
+        data-testid="input-first-name"
       />
 
       <Input
@@ -127,6 +128,7 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
         onChange={(e) => handleChange('lastName', e.target.value)}
         error={errors.lastName}
         required
+        data-testid="input-last-name"
       />
 
       <Input
@@ -136,6 +138,7 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
         onChange={(e) => handleChange('email', e.target.value)}
         error={errors.email}
         required
+        data-testid="input-email"
       />
 
       <Input
@@ -145,6 +148,7 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
         onChange={(e) => handleChange('phone', e.target.value)}
         error={errors.phone}
         required
+        data-testid="input-phone"
       />
 
       <Input
@@ -152,13 +156,14 @@ export function CustomerForm({ mode, customerNumber, initialData }: CustomerForm
         value={formData.address ?? ''}
         onChange={(e) => handleChange('address', e.target.value)}
         error={errors.address}
+        data-testid="input-address"
       />
 
       <div className="flex gap-3">
-        <Button type="submit" variant="primary" loading={isSubmitting}>
+        <Button type="submit" variant="primary" loading={isSubmitting} data-testid="submit-customer">
           {mode === 'create' ? 'Create' : 'Save Changes'}
         </Button>
-        <Button type="button" variant="secondary" onClick={() => navigate('/customers')}>
+        <Button type="button" variant="secondary" onClick={() => navigate('/customers')} data-testid="cancel-customer">
           Cancel
         </Button>
       </div>

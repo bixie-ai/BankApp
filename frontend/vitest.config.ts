@@ -26,10 +26,27 @@ export default defineConfig({
         inline: ['react', 'react-dom'],
       },
     },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'unit',
+          include: ['src/__tests__/**/*.test.{ts,tsx}'],
+          exclude: ['src/__tests__/integration/**'],
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'integration',
+          include: ['src/__tests__/integration/**/*.test.{ts,tsx}'],
+        },
+      },
+    ],
     coverage: {
       provider: 'v8',
-      include: ['src/components/**/*.{ts,tsx}'],
-      exclude: ['src/components/**/index.ts'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/index.ts', 'src/__tests__/**', 'src/mocks/**', 'src/test-setup.ts'],
     },
   },
 })

@@ -83,7 +83,7 @@ export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg" noValidate data-testid="create-account-form">
       <Typography variant="h2">Create New Account</Typography>
 
       <Input
@@ -93,6 +93,7 @@ export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
         error={errors.customerNumber}
         placeholder="Enter customer number"
         required
+        data-testid="input-customer-number"
       />
 
       <Select
@@ -102,6 +103,7 @@ export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
         onChange={(e) => handleChange('type', e.target.value)}
         error={errors.type}
         required
+        data-testid="select-account-type"
       />
 
       <Select
@@ -111,6 +113,7 @@ export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
         onChange={(e) => handleChange('currency', e.target.value)}
         error={errors.currency}
         required
+        data-testid="select-currency"
       />
 
       <div className="flex gap-3">
@@ -119,6 +122,7 @@ export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
           variant="primary"
           loading={createMutation.isPending}
           disabled={createMutation.isPending}
+          data-testid="submit-create-account"
         >
           Create Account
         </Button>
