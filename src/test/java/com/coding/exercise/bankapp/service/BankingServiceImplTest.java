@@ -458,24 +458,23 @@ class BankingServiceImplTest {
     }
 
     @Test
-    void deleteCustomer_exists_deletesAndReturnsOk() {
+    void deleteCustomer_exists_deletesAndReturnsNoContent() {
         when(customerRepository.findByCustomerNumber(1001L)).thenReturn(Optional.of(testCustomer));
 
         ResponseEntity<Object> response = bankingService.deleteCustomer(1001L);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Success: Customer deleted.", response.getBody());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(customerRepository).delete(testCustomer);
     }
 
     @Test
-    void deleteCustomer_notExists_returnsBadRequest() {
+    void deleteCustomer_notExists_returnsNotFound() {
         when(customerRepository.findByCustomerNumber(9999L)).thenReturn(Optional.empty());
 
         ResponseEntity<Object> response = bankingService.deleteCustomer(9999L);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals("Customer does not exist.", response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals("Customer Number 9999 not found.", response.getBody());
         verify(customerRepository, never()).delete(any());
     }
 

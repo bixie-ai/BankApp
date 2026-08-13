@@ -1,62 +1,64 @@
-import { Container, Typography, Card, CardHeader, Button, Grid } from '@components/ui'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import { Container, Typography, Button } from '@components/ui'
+import { CustomerListPage } from '@/pages/CustomerListPage'
+import { CustomerDetailPage } from '@/pages/CustomerDetailPage'
+import { CustomerCreatePage } from '@/pages/CustomerCreatePage'
+import { CustomerEditPage } from '@/pages/CustomerEditPage'
 
 function App() {
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <header className="bg-white border-b border-neutral-200 py-4">
-        <Container>
-          <div className="flex items-center justify-between">
-            <Typography variant="h3" className="text-primary-600">
-              BankApp
-            </Typography>
-            <Button variant="primary" size="sm">
-              Sign In
-            </Button>
-          </div>
-        </Container>
-      </header>
+    <BrowserRouter>
+      <div className="min-h-screen bg-neutral-50">
+        <header className="bg-white border-b border-neutral-200 py-4">
+          <Container>
+            <div className="flex items-center justify-between">
+              <Link to="/">
+                <Typography variant="h3" className="text-primary-600">
+                  BankApp
+                </Typography>
+              </Link>
+              <nav className="flex items-center gap-4">
+                <Link to="/customers">
+                  <Button variant="ghost" size="sm">
+                    Customers
+                  </Button>
+                </Link>
+                <Button variant="primary" size="sm">
+                  Sign In
+                </Button>
+              </nav>
+            </div>
+          </Container>
+        </header>
 
-      <main className="py-8">
-        <Container>
-          <Typography variant="h1" className="mb-6">
-            Welcome to BankApp
-          </Typography>
-          <Typography variant="body" className="mb-8 text-neutral-600">
-            Manage your accounts, transfers, and transactions securely.
-          </Typography>
+        <main>
+          <Routes>
+            <Route path="/customers" element={<CustomerListPage />} />
+            <Route path="/customers/new" element={<CustomerCreatePage />} />
+            <Route path="/customers/:customerNumber" element={<CustomerDetailPage />} />
+            <Route path="/customers/:customerNumber/edit" element={<CustomerEditPage />} />
+            <Route
+              path="/"
+              element={
+                <Container>
+                  <div className="py-8">
+                    <Typography variant="h1" className="mb-6">
+                      Welcome to BankApp
+                    </Typography>
+                    <Typography variant="body" className="mb-8 text-neutral-600">
+                      Manage your accounts, transfers, and transactions securely.
+                    </Typography>
+                  </div>
+                </Container>
+              }
+            />
+          </Routes>
+        </main>
 
-          <Grid cols={3} gap="md">
-            <Card>
-              <CardHeader
-                title="Accounts"
-                description="View and manage your bank accounts"
-              />
-              <Button variant="secondary" size="sm">
-                View Accounts
-              </Button>
-            </Card>
-            <Card>
-              <CardHeader
-                title="Transfers"
-                description="Send money between accounts"
-              />
-              <Button variant="secondary" size="sm">
-                New Transfer
-              </Button>
-            </Card>
-            <Card>
-              <CardHeader
-                title="Transactions"
-                description="Review your recent transactions"
-              />
-              <Button variant="secondary" size="sm">
-                View History
-              </Button>
-            </Card>
-          </Grid>
-        </Container>
-      </main>
-    </div>
+        <Toaster position="top-right" />
+      </div>
+    </BrowserRouter>
   )
 }
 

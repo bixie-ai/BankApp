@@ -3,14 +3,24 @@ import { CustomerSchema } from '@domain/schemas'
 
 describe('CustomerSchema', () => {
   const validCustomer = {
-    id: 'cust-001',
     firstName: 'John',
     lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+1234567890',
-    dateOfBirth: '1990-05-15',
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
+    middleName: null,
+    customerNumber: 1000,
+    status: 'ACTIVE',
+    contactDetails: {
+      emailId: 'john.doe@example.com',
+      homePhone: '+1234567890',
+      workPhone: null,
+    },
+    customerAddress: {
+      address1: '123 Main St',
+      address2: null,
+      city: 'Springfield',
+      state: 'IL',
+      zip: '62704',
+      country: 'US',
+    },
   }
 
   it('should validate a valid customer', () => {
@@ -18,28 +28,37 @@ describe('CustomerSchema', () => {
     expect(result.success).toBe(true)
   })
 
-  it('should reject empty id', () => {
-    const result = CustomerSchema.safeParse({ ...validCustomer, id: '' })
-    expect(result.success).toBe(false)
+  it('should allow null optional fields', () => {
+    const result = CustomerSchema.safeParse({
+      firstName: 'Jane',
+      lastName: 'Smith',
+      middleName: null,
+      customerNumber: null,
+      status: null,
+      contactDetails: null,
+      customerAddress: null,
+    })
+    expect(result.success).toBe(true)
   })
 
-  it('should reject invalid email', () => {
-    const result = CustomerSchema.safeParse({ ...validCustomer, email: 'not-an-email' })
-    expect(result.success).toBe(false)
+  it('should allow partial customer objects', () => {
+    const result = CustomerSchema.safeParse({ firstName: 'Jane' })
+    expect(result.success).toBe(true)
   })
 
-  it('should reject invalid dateOfBirth format', () => {
-    const result = CustomerSchema.safeParse({ ...validCustomer, dateOfBirth: 'not-a-date' })
-    expect(result.success).toBe(false)
+  it('should validate nested contactDetails', () => {
+    const result = CustomerSchema.safeParse({
+      firstName: 'Test',
+      contactDetails: { emailId: 'test@example.com' },
+    })
+    expect(result.success).toBe(true)
   })
 
-  it('should reject invalid createdAt datetime', () => {
-    const result = CustomerSchema.safeParse({ ...validCustomer, createdAt: 'not-datetime' })
-    expect(result.success).toBe(false)
-  })
-
-  it('should reject missing required fields', () => {
-    const result = CustomerSchema.safeParse({ id: 'cust-001' })
-    expect(result.success).toBe(false)
+  it('should validate nested customerAddress', () => {
+    const result = CustomerSchema.safeParse({
+      firstName: 'Test',
+      customerAddress: { address1: '456 Elm St', city: 'Anywhere' },
+    })
+    expect(result.success).toBe(true)
   })
 })
