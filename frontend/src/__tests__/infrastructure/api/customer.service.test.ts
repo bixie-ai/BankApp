@@ -16,28 +16,22 @@ vi.mock('@infrastructure/api/client', () => ({
 }))
 
 const validCustomer = {
-  id: '1',
   firstName: 'John',
   lastName: 'Doe',
-  email: 'john@example.com',
-  phone: '555-1234',
-  dateOfBirth: '1990-01-15',
-  createdAt: '2024-01-01T00:00:00Z',
-  updatedAt: '2024-01-01T00:00:00Z',
+  customerNumber: 1000,
+  status: 'ACTIVE',
+  contactDetails: { emailId: 'john@example.com', homePhone: '555-1234' },
+  customerAddress: { address1: '123 Main St' },
 }
 
-const validApiResponse = {
-  success: true,
-  data: validCustomer,
-  message: 'OK',
-  timestamp: '2024-01-01T00:00:00Z',
-}
-
-const validListResponse = {
-  success: true,
-  data: [validCustomer],
-  message: 'OK',
-  timestamp: '2024-01-01T00:00:00Z',
+const paginatedResponse = {
+  content: [validCustomer],
+  totalElements: 1,
+  totalPages: 1,
+  number: 0,
+  size: 10,
+  first: true,
+  last: true,
 }
 
 describe('customerService', () => {
@@ -46,65 +40,63 @@ describe('customerService', () => {
   })
 
   describe('getAll', () => {
-    it('should fetch all customers and validate response', async () => {
-      mockGet.mockResolvedValue({ data: validListResponse })
-      const result = await customerService.getAll()
-      expect(mockGet).toHaveBeenCalledWith('/customers')
-      expect(result.data).toEqual([validCustomer])
+    it('should fetch all customers with pagination params', async () => {
+      mockGet.mockResolvedValue({ data: paginatedResponse })
+      const result = await customerService.getAll({ page: 0, size: 10 })
+      expect(mockGet).toHaveBeenCalledWith('/customers/all', { params: { page: 0, size: 10 } })
+      expect(result.content).toEqual([validCustomer])
+      expect(result.totalElements).toBe(1)
     })
 
-    it('should throw on invalid response schema', async () => {
-      mockGet.mockResolvedValue({ data: { success: true, data: [{ invalid: true }] } })
-      await expect(customerService.getAll()).rejects.toThrow()
+    it('should pass search parameter when provided', async () => {
+      mockGet.mockResolvedValue({ data: paginatedResponse })
+      await customerService.getAll({ page: 0, size: 10, search: 'John' })
+      expect(mockGet).toHaveBeenCalledWith('/customers/all', { params: { page: 0, size: 10, search: 'John' } })
     })
   })
 
-  describe('getById', () => {
-    it('should fetch customer by id and validate response', async () => {
-      mockGet.mockResolvedValue({ data: validApiResponse })
-      const result = await customerService.getById('1')
-      expect(mockGet).toHaveBeenCalledWith('/customers/1')
-      expect(result.data).toEqual(validCustomer)
-    })
-
-    it('should throw on invalid response schema', async () => {
-      mockGet.mockResolvedValue({ data: { success: true, data: { id: '' } } })
-      await expect(customerService.getById('1')).rejects.toThrow()
+  describe('getByCustomerNumber', () => {
+    it('should fetch customer by customer number', async () => {
+      mockGet.mockResolvedValue({ data: validCustomer })
+      const result = await customerService.getByCustomerNumber(1000)
+      expect(mockGet).toHaveBeenCalledWith('/customers/1000')
+      expect(result.firstName).toBe('John')
     })
   })
 
   describe('create', () => {
-    it('should post customer data and validate response', async () => {
+    it('should post customer data to /customers/add', async () => {
       const input = {
         firstName: 'Jane',
         lastName: 'Doe',
-        email: 'jane@example.com',
-        phone: '555-5678',
-        dateOfBirth: '1992-05-20',
+        contactDetails: { emailId: 'jane@example.com', homePhone: '555-5678' },
       }
-      mockPost.mockResolvedValue({ data: validApiResponse })
+      mockPost.mockResolvedValue({ data: 'New Customer created successfully.' })
       const result = await customerService.create(input)
-      expect(mockPost).toHaveBeenCalledWith('/customers', input)
-      expect(result.success).toBe(true)
+      expect(mockPost).toHaveBeenCalledWith('/customers/add', input)
+      expect(result).toBe('New Customer created successfully.')
     })
   })
 
   describe('update', () => {
-    it('should put customer data and validate response', async () => {
-      const input = { firstName: 'Updated' }
-      mockPut.mockResolvedValue({ data: validApiResponse })
-      const result = await customerService.update('1', input)
-      expect(mockPut).toHaveBeenCalledWith('/customers/1', input)
-      expect(result.success).toBe(true)
+    it('should put customer data to /customers/:customerNumber', async () => {
+      const input = {
+        firstName: 'Updated',
+        lastName: 'Doe',
+        contactDetails: { emailId: 'updated@example.com' },
+      }
+      mockPut.mockResolvedValue({ data: 'Success: Customer updated.' })
+      const result = await customerService.update(1000, input)
+      expect(mockPut).toHaveBeenCalledWith('/customers/1000', input)
+      expect(result).toBe('Success: Customer updated.')
     })
   })
 
   describe('delete', () => {
-    it('should delete customer and validate response', async () => {
-      mockDelete.mockResolvedValue({ data: validApiResponse })
-      const result = await customerService.delete('1')
-      expect(mockDelete).toHaveBeenCalledWith('/customers/1')
-      expect(result.success).toBe(true)
+    it('should delete customer by customer number', async () => {
+      mockDelete.mockResolvedValue({ data: undefined })
+      await customerService.delete(1000)
+      expect(mockDelete).toHaveBeenCalledWith('/customers/1000')
     })
   })
 })

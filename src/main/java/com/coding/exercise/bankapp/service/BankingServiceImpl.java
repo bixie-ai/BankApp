@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,6 +59,15 @@ public class BankingServiceImpl implements BankingService {
         });
 
         return allCustomerDetails;
+    }
+
+    public Page<CustomerDetails> findAllPaginated(String search, Pageable pageable) {
+        if (search != null && !search.isBlank()) {
+            return customerRepository.searchCustomers(search.trim(), pageable)
+                    .map(bankingServiceHelper::convertToCustomerDomain);
+        }
+        return customerRepository.findAll(pageable)
+                .map(bankingServiceHelper::convertToCustomerDomain);
     }
 
 	public ResponseEntity<Object> addCustomer(CustomerDetails customerDetails) {
@@ -129,9 +140,9 @@ public class BankingServiceImpl implements BankingService {
 		if(managedCustomerEntityOpt.isPresent()) {
 			Customer managedCustomerEntity = managedCustomerEntityOpt.get();
 			customerRepository.delete(managedCustomerEntity);
-			return ResponseEntity.status(HttpStatus.OK).body("Success: Customer deleted.");
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Customer does not exist.");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer Number " + customerNumber + " not found.");
 		}
 	}
 

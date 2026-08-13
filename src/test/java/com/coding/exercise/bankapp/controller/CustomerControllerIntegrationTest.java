@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(username = "bankapp", password = "changeit")
 class CustomerControllerIntegrationTest {
 
     @Autowired
@@ -105,7 +107,7 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
-    void getAllCustomers_multipleCustomers_returnsList() throws Exception {
+    void getAllCustomers_multipleCustomers_returnsPaginatedList() throws Exception {
         Customer c1 = Customer.builder()
                 .firstName("Alice").lastName("One").customerNumber(3010L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("alice@test.com").homePhone("1").workPhone("2").build())
@@ -121,16 +123,37 @@ class CustomerControllerIntegrationTest {
 
         mockMvc.perform(get("/customers/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].firstName", is("Alice")))
-                .andExpect(jsonPath("$[1].firstName", is("Bob")));
+                .andExpect(jsonPath("$.content", hasSize(2)))
+                .andExpect(jsonPath("$.totalElements", is(2)));
     }
 
     @Test
-    void getAllCustomers_emptyDatabase_returnsEmptyList() throws Exception {
+    void getAllCustomers_emptyDatabase_returnsEmptyPage() throws Exception {
         mockMvc.perform(get("/customers/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(jsonPath("$.content", hasSize(0)))
+                .andExpect(jsonPath("$.totalElements", is(0)));
+    }
+
+    @Test
+    void getAllCustomers_withSearchParam_filtersResults() throws Exception {
+        Customer c1 = Customer.builder()
+                .firstName("Alice").lastName("Wonder").customerNumber(3020L).status("ACTIVE")
+                .contactDetails(Contact.builder().emailId("alice@test.com").homePhone("1").workPhone("2").build())
+                .customerAddress(Address.builder().address1("A1").city("C1").state("S1").zip("00001").country("US").build())
+                .createDateTime(Instant.now()).build();
+        Customer c2 = Customer.builder()
+                .firstName("Bob").lastName("Builder").customerNumber(3021L).status("ACTIVE")
+                .contactDetails(Contact.builder().emailId("bob@test.com").homePhone("3").workPhone("4").build())
+                .customerAddress(Address.builder().address1("A2").city("C2").state("S2").zip("00002").country("US").build())
+                .createDateTime(Instant.now()).build();
+        customerRepository.save(c1);
+        customerRepository.save(c2);
+
+        mockMvc.perform(get("/customers/all").param("search", "Alice"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].firstName", is("Alice")));
     }
 
     @Test
@@ -191,7 +214,7 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
-    void deleteCustomer_existingCustomer_returnsOk() throws Exception {
+    void deleteCustomer_existingCustomer_returnsNoContent() throws Exception {
         Customer entity = Customer.builder()
                 .firstName("DeleteMe").lastName("User").customerNumber(3004L).status("ACTIVE")
                 .contactDetails(Contact.builder().emailId("del@test.com").homePhone("1").workPhone("2").build())
@@ -200,19 +223,16 @@ class CustomerControllerIntegrationTest {
         customerRepository.save(entity);
 
         mockMvc.perform(delete("/customers/{customerNumber}", 3004L))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Success: Customer deleted."));
+                .andExpect(status().isNoContent());
 
         mockMvc.perform(get("/customers/{customerNumber}", 3004L))
-                .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(status().isNotFound());
     }
 
     @Test
-    void deleteCustomer_nonExistent_returnsBadRequest() throws Exception {
+    void deleteCustomer_nonExistent_returnsNotFound() throws Exception {
         mockMvc.perform(delete("/customers/{customerNumber}", 9999L))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Customer does not exist."));
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -254,9 +274,40 @@ class CustomerControllerIntegrationTest {
     }
 
     @Test
-    void getCustomer_nonExistent_returnsNullBody() throws Exception {
+    void getCustomer_nonExistent_returnsNotFound() throws Exception {
         mockMvc.perform(get("/customers/{customerNumber}", 8888L))
-                .andExpect(status().isOk())
-                .andExpect(content().string(""));
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void addCustomer_missingFirstName_returnsBadRequest() throws Exception {
+        String rawJson = """
+                {
+                    "lastName": "Test",
+                    "contactDetails": {
+                        "emailId": "test@test.com"
+                    }
+                }
+                """;
+
+        mockMvc.perform(post("/customers/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(rawJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void addCustomer_missingEmail_returnsBadRequest() throws Exception {
+        String rawJson = """
+                {
+                    "firstName": "Test",
+                    "lastName": "User"
+                }
+                """;
+
+        mockMvc.perform(post("/customers/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(rawJson))
+                .andExpect(status().isBadRequest());
     }
 }
