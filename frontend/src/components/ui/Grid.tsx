@@ -1,8 +1,11 @@
 import type { HTMLAttributes } from 'react'
 import { cn } from '@lib/cn'
 
+/** Props for the {@link Grid} component. */
 export interface GridProps extends HTMLAttributes<HTMLDivElement> {
+  /** Number of columns at the largest breakpoint. Columns collapse responsively on smaller screens. Defaults to 1. */
   cols?: 1 | 2 | 3 | 4 | 6 | 12
+  /** Spacing between grid items. Defaults to 'md'. */
   gap?: 'none' | 'sm' | 'md' | 'lg'
 }
 
@@ -22,6 +25,13 @@ const gapStyles = {
   lg: 'gap-8',
 }
 
+/**
+ * Renders a responsive CSS Grid layout that automatically adjusts column
+ * count at mobile, tablet, and desktop breakpoints. Simplifies building
+ * card grids, form layouts, and dashboard panels.
+ *
+ * @returns A div element with CSS Grid styling applied.
+ */
 export function Grid({ cols = 1, gap = 'md', className, children, ...props }: GridProps) {
   return (
     <div className={cn('grid', colStyles[cols], gapStyles[gap], className)} {...props}>

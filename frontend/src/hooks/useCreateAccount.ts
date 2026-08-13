@@ -4,6 +4,13 @@ import type { CreateAccountInput } from '@infrastructure/api/services/account.se
 
 const ACCOUNTS_KEY = 'accounts'
 
+/**
+ * Provides a mutation to create a new bank account for a customer.
+ * On successful creation, automatically invalidates the accounts list cache
+ * so that any displayed account lists reflect the newly created account.
+ *
+ * @returns A React Query mutation object with a mutate function accepting CreateAccountInput.
+ */
 export function useCreateAccount() {
   const queryClient = useQueryClient()
 

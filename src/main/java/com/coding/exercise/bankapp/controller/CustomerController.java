@@ -27,6 +27,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * REST controller for customer lifecycle operations.
+ *
+ * <p>Exposes CRUD endpoints under {@code /customers} for managing bank customers.
+ * All endpoints require HTTP Basic authentication. Request validation is performed
+ * inline before delegating to the service layer.</p>
+ */
 @RestController
 @RequestMapping("customers")
 @Tag(name = "Customer REST endpoints")
@@ -35,6 +42,17 @@ public class CustomerController {
 	@Autowired
 	private BankingServiceImpl bankingService;
 
+	/**
+	 * Retrieves a paginated list of customers, optionally filtered by a search term.
+	 *
+	 * <p>Results are sorted by creation date descending (newest first). The search
+	 * parameter matches against first name, last name, and email (case-insensitive).</p>
+	 *
+	 * @param page   zero-based page index (defaults to 0)
+	 * @param size   number of records per page (defaults to 10)
+	 * @param search optional text to filter customers by name or email
+	 * @return paginated customer details with HTTP 200
+	 */
 	@GetMapping(path = "/all")
 	@Operation(summary = "Find all customers", description = "Gets details of all the customers with pagination and search support")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success"),
@@ -51,6 +69,15 @@ public class CustomerController {
 		return ResponseEntity.ok(customers);
 	}
 
+	/**
+	 * Creates a new customer record after validating required fields.
+	 *
+	 * <p>Pre-conditions: firstName, lastName, and contactDetails.emailId must be non-blank.
+	 * On success the customer is persisted and HTTP 201 is returned.</p>
+	 *
+	 * @param customer the customer details payload from the request body
+	 * @return HTTP 201 on success, or HTTP 400 if required fields are missing
+	 */
 	@PostMapping(path = "/add")
 	@Operation(summary = "Add a Customer", description = "Add customer and create an account")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Created"),
@@ -71,6 +98,12 @@ public class CustomerController {
 		return bankingService.addCustomer(customer);
 	}
 
+	/**
+	 * Retrieves a single customer by their unique customer number.
+	 *
+	 * @param customerNumber the business identifier of the customer
+	 * @return HTTP 200 with customer details, or HTTP 404 if no matching customer exists
+	 */
 	@GetMapping(path = "/{customerNumber}")
 	@Operation(summary = "Get customer details", description = "Get Customer details by customer number.")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success"),
@@ -85,6 +118,16 @@ public class CustomerController {
 		return ResponseEntity.ok(customer);
 	}
 
+	/**
+	 * Updates an existing customer's personal information, contact, and address details.
+	 *
+	 * <p>Pre-conditions: firstName and lastName must be non-blank. The customer identified
+	 * by {@code customerNumber} must exist in the system.</p>
+	 *
+	 * @param customerDetails the updated customer data
+	 * @param customerNumber  the business identifier of the customer to update
+	 * @return HTTP 200 on success, HTTP 400 for validation failures, or HTTP 404 if not found
+	 */
 	@PutMapping(path = "/{customerNumber}")
 	@Operation(summary = "Update customer", description = "Update customer and any other account information associated with him.")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Success"),
@@ -103,6 +146,14 @@ public class CustomerController {
 		return bankingService.updateCustomer(customerDetails, customerNumber);
 	}
 
+	/**
+	 * Deletes a customer and all associated account relationships.
+	 *
+	 * <p>Cascades deletion to the customer's address and contact entities via JPA.</p>
+	 *
+	 * @param customerNumber the business identifier of the customer to delete
+	 * @return HTTP 204 on success, or HTTP 404 if the customer does not exist
+	 */
 	@DeleteMapping(path = "/{customerNumber}")
 	@Operation(summary = "Delete customer and related accounts", description = "Delete customer and all accounts associated with him.")
 	@ApiResponses(value = { @ApiResponse(responseCode = "204", description = "No Content"),

@@ -1,18 +1,29 @@
 import { forwardRef, type SelectHTMLAttributes, useId } from 'react'
 import { cn } from '@lib/cn'
 
+/** Represents a single option within a Select dropdown. */
 export interface SelectOption {
+  /** The underlying value submitted with the form. */
   value: string
+  /** The human-readable text displayed to the user. */
   label: string
+  /** When true, the option is visible but not selectable. */
   disabled?: boolean
 }
 
+/** Props for the {@link Select} component. */
 export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
+  /** Visible label rendered above the select element. */
   label?: string
+  /** Error message displayed below the select; also triggers error styling. */
   error?: string
+  /** Supplementary hint text shown below the select when no error is present. */
   helperText?: string
+  /** The list of options to render inside the dropdown. */
   options: SelectOption[]
+  /** Placeholder text shown as a disabled first option when no value is selected. */
   placeholder?: string
+  /** Controls the padding and font size of the select element. */
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -22,6 +33,12 @@ const sizeStyles = {
   lg: 'px-4 py-3 text-lg',
 }
 
+/**
+ * A styled native select dropdown with support for labels, validation errors,
+ * and helper text. Wraps the native `<select>` element for full accessibility.
+ *
+ * @returns A labeled select field with optional error and helper text.
+ */
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ label, error, helperText, options, placeholder, size = 'md', disabled, className, id, ...props }, ref) => {
     const generatedId = useId()

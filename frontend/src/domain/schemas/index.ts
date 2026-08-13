@@ -1,3 +1,8 @@
+/**
+ * Public API for domain validation schemas.
+ * Re-exports all Zod schemas and their inferred DTO types used to validate
+ * data at API boundaries throughout the application.
+ */
 export { CustomerSchema, type CustomerDto } from './customer.schema'
 export {
   AccountSchema,

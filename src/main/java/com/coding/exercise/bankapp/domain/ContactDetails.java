@@ -6,6 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data transfer object representing customer contact information exchanged between
+ * the controller and service layers.
+ *
+ * <p>Encapsulates communication channels (email, home phone, work phone) and is
+ * nested within {@link CustomerDetails} to provide a complete customer profile
+ * without exposing the internal JPA entity identifier.</p>
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

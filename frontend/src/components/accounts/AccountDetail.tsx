@@ -2,10 +2,18 @@ import { useAccount } from '@/hooks/useAccount'
 import { Card, CardHeader, Typography, Skeleton, Badge, Button } from '@components/ui'
 import { formatCurrency } from '@utils/format-currency'
 
+/** Props for the {@link AccountDetail} component. */
 interface AccountDetailProps {
+  /** The unique identifier of the account to display. */
   accountId: string
 }
 
+/**
+ * Displays a single bank account's details including account number, type, status, and current balance.
+ * Handles loading, error, and not-found states with appropriate feedback and a retry action.
+ *
+ * @returns A card containing the account information or a contextual placeholder state.
+ */
 export function AccountDetail({ accountId }: AccountDetailProps) {
   const { data, isLoading, isError, error, refetch } = useAccount(accountId)
 
@@ -90,6 +98,11 @@ export function AccountDetail({ accountId }: AccountDetailProps) {
   )
 }
 
+/**
+ * Renders a colored badge indicating the account's current status (ACTIVE, CLOSED, or other).
+ *
+ * @returns A Badge element styled according to the status severity.
+ */
 function StatusBadge({ status }: { status: string }) {
   const variant = status === 'ACTIVE' ? 'success' : status === 'CLOSED' ? 'error' : 'warning'
   return <Badge variant={variant}>{status}</Badge>

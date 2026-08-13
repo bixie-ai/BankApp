@@ -12,7 +12,9 @@ const createAccountSchema = z.object({
 
 type CreateAccountFormData = z.infer<typeof createAccountSchema>
 
+/** Props for the {@link CreateAccountForm} component. */
 interface CreateAccountFormProps {
+  /** Optional callback invoked after an account is successfully created, useful for closing modals or refreshing lists. */
   onSuccess?: () => void
 }
 
@@ -28,6 +30,12 @@ const currencyOptions = [
   { value: 'GBP', label: 'GBP' },
 ]
 
+/**
+ * Renders a form for creating a new bank account, with fields for customer number, account type, and currency.
+ * Validates input with Zod on change and on submit, and displays toast notifications for success or failure.
+ *
+ * @returns A validated form that submits a new account creation request to the API.
+ */
 export function CreateAccountForm({ onSuccess }: CreateAccountFormProps) {
   const createMutation = useCreateAccount()
 

@@ -14,6 +14,12 @@ import {
   Typography,
 } from '@components/ui'
 
+/**
+ * Renders a searchable, paginated table of all customers. Includes a debounced search input
+ * that filters results server-side and row-level click navigation to individual customer details.
+ *
+ * @returns A list view with search, pagination controls, and an "Add Customer" action button.
+ */
 export function CustomerList() {
   const navigate = useNavigate()
   const [search, setSearch] = useState('')

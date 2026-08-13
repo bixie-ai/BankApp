@@ -7,6 +7,10 @@ import { CustomerCreatePage } from '@/pages/CustomerCreatePage'
 import { CustomerEditPage } from '@/pages/CustomerEditPage'
 import { AccountPage } from '@/pages/AccountPage'
 
+/**
+ * Root application component that provides top-level routing, navigation layout,
+ * and page structure for the BankApp single-page application.
+ */
 function App() {
   return (
     <BrowserRouter>

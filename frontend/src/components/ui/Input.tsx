@@ -1,10 +1,15 @@
 import { forwardRef, type InputHTMLAttributes, useId } from 'react'
 import { cn } from '@lib/cn'
 
+/** Props for the {@link Input} component. */
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  /** Visible label text rendered above the input and linked via htmlFor. */
   label?: string
+  /** Error message displayed below the input in red. Also sets aria-invalid on the input. */
   error?: string
+  /** Supplemental hint text shown below the input when no error is present. */
   helperText?: string
+  /** Controls padding and font size of the input field. Defaults to 'md'. */
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -14,6 +19,13 @@ const sizeStyles = {
   lg: 'px-4 py-3 text-lg',
 }
 
+/**
+ * Renders a fully accessible text input with an optional label, validation
+ * error message, and helper text. Automatically generates unique IDs for
+ * aria-describedby associations and forwards its ref for form library integration.
+ *
+ * @returns A labeled input field with optional error and helper text below it.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, size = 'md', disabled, readOnly, className, id, ...props }, ref) => {
     const generatedId = useId()

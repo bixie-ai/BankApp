@@ -1,12 +1,19 @@
 import { useEffect, useRef, type ReactNode, type HTMLAttributes } from 'react'
 import { cn } from '@lib/cn'
 
+/** Props for the {@link Modal} component. */
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+  /** Whether the modal is currently visible. Controls rendering and body scroll lock. */
   open: boolean
+  /** Callback invoked when the user dismisses the modal via backdrop click, Escape key, or close button. */
   onClose: () => void
+  /** Optional heading displayed at the top of the modal dialog. */
   title?: string
+  /** Optional descriptive text rendered below the title for additional context. */
   description?: string
+  /** Content rendered inside the modal body. */
   children: ReactNode
+  /** Maximum width of the modal panel. Defaults to 'md'. */
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -16,6 +23,13 @@ const sizeStyles = {
   lg: 'max-w-2xl',
 }
 
+/**
+ * Renders an accessible modal dialog with a backdrop overlay, focus trapping,
+ * and Escape key dismissal. Locks body scroll while open and restores focus
+ * to the previously active element on close.
+ *
+ * @returns A portal-style fixed overlay with a centered dialog panel, or null when closed.
+ */
 export function Modal({ open, onClose, title, description, children, size = 'md', className, ...props }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null)
   const previousFocusRef = useRef<Element | null>(null)

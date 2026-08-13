@@ -3,6 +3,14 @@ import { Container, Skeleton } from '@components/ui'
 import { CustomerForm } from '@/components/customers/CustomerForm'
 import { useCustomer } from '@/hooks/useCustomers'
 
+/**
+ * Page for editing an existing customer's information.
+ * Fetches the customer by the `customerNumber` route parameter, shows a loading
+ * skeleton while data is in flight, then renders the CustomerForm pre-filled
+ * with the customer's current data.
+ *
+ * @returns A loading skeleton or the pre-populated customer edit form.
+ */
 export function CustomerEditPage() {
   const { customerNumber } = useParams<{ customerNumber: string }>()
   const num = Number(customerNumber)

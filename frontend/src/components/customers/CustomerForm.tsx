@@ -16,9 +16,13 @@ const customerFormSchema = z.object({
 
 type CustomerFormData = z.infer<typeof customerFormSchema>
 
+/** Props for the {@link CustomerForm} component. */
 interface CustomerFormProps {
+  /** Whether the form is used to create a new customer or edit an existing one. */
   mode: 'create' | 'edit'
+  /** The customer number to update; required when mode is 'edit'. */
   customerNumber?: number
+  /** Pre-populated field values used when editing an existing customer. */
   initialData?: {
     firstName: string
     lastName: string
@@ -28,6 +32,12 @@ interface CustomerFormProps {
   }
 }
 
+/**
+ * A dual-purpose form for creating or editing customer records. Validates all fields with Zod
+ * on change and on submit, and navigates back to the customer list upon successful mutation.
+ *
+ * @returns A validated form with fields for name, email, phone, and address.
+ */
 export function CustomerForm({ mode, customerNumber, initialData }: CustomerFormProps) {
   const navigate = useNavigate()
   const createMutation = useCreateCustomer()

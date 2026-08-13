@@ -6,6 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Data transfer object representing a postal address exchanged between the
+ * controller and service layers.
+ *
+ * <p>Used as a nested component within both {@link CustomerDetails} (customer address)
+ * and {@link BankInformation} (branch address) to convey location data without
+ * exposing the internal JPA entity identifier.</p>
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

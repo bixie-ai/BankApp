@@ -1,13 +1,21 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@lib/cn'
 
+/** Visual style variants that convey the button's importance or intent. */
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost'
+
+/** Size presets controlling padding and font size of the button. */
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
+/** Props for the {@link Button} component. */
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual emphasis level of the button. Defaults to 'primary'. */
   variant?: ButtonVariant
+  /** Controls the button's padding and text size. Defaults to 'md'. */
   size?: ButtonSize
+  /** When true, displays a spinner and disables interaction to indicate an in-progress action. */
   loading?: boolean
+  /** Optional icon element rendered before the button label. Hidden from assistive tech via aria-hidden. */
   icon?: ReactNode
 }
 
@@ -28,6 +36,13 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: 'px-6 py-3 text-lg gap-2.5',
 }
 
+/**
+ * Renders an accessible, styled button supporting multiple visual variants,
+ * sizes, loading states, and an optional leading icon. Forwards its ref to
+ * the underlying button element for imperative focus management.
+ *
+ * @returns A button element with contextual styling and optional spinner.
+ */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'primary', size = 'md', loading = false, disabled, icon, children, className, ...props }, ref) => {
     const isDisabled = disabled || loading

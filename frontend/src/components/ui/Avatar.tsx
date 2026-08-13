@@ -1,11 +1,16 @@
 import type { ImgHTMLAttributes } from 'react'
 import { cn } from '@lib/cn'
 
+/** Available size presets for the Avatar component. */
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
 
+/** Props for the {@link Avatar} component. */
 export interface AvatarProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'size'> {
+  /** Visual size of the avatar circle. Defaults to 'md'. */
   size?: AvatarSize
+  /** Full name used to derive initials when no image source is provided. */
   name?: string
+  /** URL of the user's profile image. When provided, renders an img element instead of initials. */
   src?: string
 }
 
@@ -22,6 +27,13 @@ function getInitials(name: string): string {
   return ((parts[0]?.[0] ?? '') + (parts[parts.length - 1]?.[0] ?? '')).toUpperCase()
 }
 
+/**
+ * Renders a circular avatar displaying either a user's profile image or their
+ * computed initials as a fallback. Useful for representing users in lists,
+ * headers, and comment threads.
+ *
+ * @returns An img element when `src` is provided, otherwise a span with initials.
+ */
 export function Avatar({ size = 'md', name, src, alt, className, ...props }: AvatarProps) {
   const initials = name ? getInitials(name) : '?'
   const label = alt ?? name ?? 'Avatar'
