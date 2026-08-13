@@ -5,6 +5,7 @@ import { CustomerListPage } from '@/pages/CustomerListPage'
 import { CustomerDetailPage } from '@/pages/CustomerDetailPage'
 import { CustomerCreatePage } from '@/pages/CustomerCreatePage'
 import { CustomerEditPage } from '@/pages/CustomerEditPage'
+import { AccountPage } from '@/pages/AccountPage'
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
                     Customers
                   </Button>
                 </Link>
+                <Link to="/accounts">
+                  <Button variant="ghost" size="sm">
+                    Accounts
+                  </Button>
+                </Link>
                 <Button variant="primary" size="sm">
                   Sign In
                 </Button>
@@ -38,6 +44,8 @@ function App() {
             <Route path="/customers/new" element={<CustomerCreatePage />} />
             <Route path="/customers/:customerNumber" element={<CustomerDetailPage />} />
             <Route path="/customers/:customerNumber/edit" element={<CustomerEditPage />} />
+            <Route path="/accounts" element={<AccountPage />} />
+            <Route path="/accounts/:accountId" element={<AccountPage />} />
             <Route
               path="/"
               element={
