@@ -15,5 +15,11 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    proxy: {
+      '/bank-api': {
+        target: 'http://localhost:8989',
+        changeOrigin: true,
+      },
+    },
   },
 })

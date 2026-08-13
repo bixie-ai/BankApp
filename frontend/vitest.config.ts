@@ -2,6 +2,9 @@ import { defineConfig } from 'vitest/config'
 import path from 'path'
 
 export default defineConfig({
+  define: {
+    'process.env.NODE_ENV': '"test"',
+  },
   resolve: {
     alias: {
       '@domain': path.resolve(import.meta.dirname, 'src/domain'),
@@ -14,5 +17,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    server: {
+      deps: {
+        inline: ['react', 'react-dom'],
+      },
+    },
   },
 })
