@@ -12,15 +12,23 @@ export default defineConfig({
       '@infrastructure': path.resolve(import.meta.dirname, 'src/infrastructure'),
       '@presentation': path.resolve(import.meta.dirname, 'src/presentation'),
       '@utils': path.resolve(import.meta.dirname, 'src/utils'),
+      '@components': path.resolve(import.meta.dirname, 'src/components'),
+      '@lib': path.resolve(import.meta.dirname, 'src/lib'),
     },
   },
   test: {
     globals: true,
     environment: 'jsdom',
+    setupFiles: ['./src/test-setup.ts'],
     server: {
       deps: {
         inline: ['react', 'react-dom'],
       },
+    },
+    coverage: {
+      provider: 'v8',
+      include: ['src/components/**/*.{ts,tsx}'],
+      exclude: ['src/components/**/index.ts'],
     },
   },
 })
